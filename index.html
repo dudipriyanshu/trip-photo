@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Photo Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+        }
+        .gallery img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+            pointer-events: none; /* Prevents right-click save */
+            user-drag: none; /* Prevents dragging */
+            -webkit-user-drag: none;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+        body {
+            -webkit-user-select: none; /* Prevents text/image selection */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault()); // Disable right-click menu
+        document.addEventListener('keydown', event => {
+            if (event.key === 'PrintScreen') {
+                event.preventDefault();
+                alert('Screenshots are disabled!');
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Trip Photo Gallery</h1>
+    <div class="gallery">
+        <?php
+        $files = glob("photos/*.{jpg,png,jpeg,gif}", GLOB_BRACE);
+        foreach ($files as $file) {
+            echo "<img src='$file' alt='Trip Photo'>";
+        }
+        ?>
+    </div>
+</body>
+</html>
